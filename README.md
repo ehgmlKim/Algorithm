@@ -5,4 +5,4 @@
 - [사이트] / [레벨] / [문제번호] / [문제이름]
 
 ## 참고
-[백준허브](chrome-extension://ccammcjdkpgjmcpijpahlehmapgmphmk/welcome.html)
+[백준허브](https://chrome.google.com/webstore/detail/%EB%B0%B1%EC%A4%80%ED%97%88%EB%B8%8Cbaekjoonhub/ccammcjdkpgjmcpijpahlehmapgmphmk/related?hl=en&authuser=0)
