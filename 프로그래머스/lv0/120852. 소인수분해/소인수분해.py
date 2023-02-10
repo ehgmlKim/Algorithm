@@ -1,16 +1,11 @@
 def solution(n):
     answer = []
-    array=[]
-    dic ={}
-    for i in range(2, n+1) :
-        dic[i] = 0
-        for j in range(1,n+1):
-            if i%j==0:
-                dic[i] += 1
-    for k,v in dic.items():
-        if v==2:
-            array.append(k)
-    for e in array:
-        if n%e==0:
-            answer.append(e)
+    i=2
+    while n>=i:
+        if n%i==0:
+            n = n/i
+            if i not in answer:
+                answer.append(i)
+        else:
+            i += 1        
     return answer
