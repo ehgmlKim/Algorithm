@@ -1,4 +1,3 @@
-import math as m
 def solution(nums):
     answer = 0
     if len(set(nums)) == len(nums)//2:
