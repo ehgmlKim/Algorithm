@@ -1,5 +1,3 @@
-from collections import deque
-
 def solution(progresses, speeds):
     answer = []
     days = []
