@@ -1,7 +1,6 @@
 n = int(input())
 m = int(input())
-min_v = m
-sum = 0
+arr = []
 for i in range(n, m+1):
   cnt = 0
   if i != 1:
@@ -10,10 +9,9 @@ for i in range(n, m+1):
         cnt = 1
         break
     if not cnt:
-      sum += i
-      min_v = min(min_v, i)
-if sum:
-  print(sum)
-  print(min_v)
+      arr += [i]
+if len(arr):
+    print(sum(arr))
+    print(arr[0])
 else:
-  print(-1)
+    print(-1)
