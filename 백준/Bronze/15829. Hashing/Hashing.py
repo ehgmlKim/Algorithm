@@ -6,6 +6,6 @@ sum = 0
 for i in range(n):
   a = arr.find(L[i])
   r = 31**i
-  sum += (a+1)*r%M
+  sum += (a+1)*r
 
-print(sum)  
+print(sum%M)  
