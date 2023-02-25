@@ -1,8 +1,8 @@
 n = int(input())
-dict = {}
+list = []
 for i in range(n):
-    dict[i] = input().split()
+    list.append(input().split())
 
-dict = sorted(dict.items(), key = lambda x : int(x[1][0]))
-for k,v in dict:
-    print(v[0], v[1])
+list.sort(key = lambda x : int(x[0]))
+for a,n in list:
+    print(a, n)
