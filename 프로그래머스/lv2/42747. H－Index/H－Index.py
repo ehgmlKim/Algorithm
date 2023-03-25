@@ -1,7 +1,11 @@
 def solution(citations):
-    #인용수로 내림차순
-    citations.sort(reverse=True)
-    for idx , citation in enumerate(citations):
-        if idx >= citation:
-            return idx
-    return len(citations)
+    answer = []
+    citations = sorted(citations)
+    dict = {}
+    for c in citations:
+        if c not in dict:
+            dict[c] = 1
+        else:
+            dict[c] += 1
+    print(dict)
+    print(answer)
