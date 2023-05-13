@@ -6,6 +6,7 @@ def solution(s):
         result = ''
         temp = s[:i]
         count = 1
+        
         for j in range(i, len(s), i):
             if temp == s[j:i+j]:
                 count += 1
