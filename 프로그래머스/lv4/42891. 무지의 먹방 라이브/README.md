@@ -96,6 +96,99 @@ Empty
 <li>4~5초 동안 (2번 음식은 다 먹었으므로) 3번 음식을 섭취한다. 남은 시간은 [1,0,0] 이다.</li>
 <li>5초에서 네트워크 장애가 발생했다. 1번 음식을 섭취해야 할 때 중단되었으므로, 장애 복구 후에 1번 음식부터 다시 먹기 시작하면 된다.</li>
 </ul>
+---
 
+### ❌첫번째 풀이 (정확성❌ 효율성❌)
+단순히 문제가 시키는대로 푼 풀이이다.
+시간이 지날 때마다 순서대로 남은 음식 시간을 1씩 줄이고, 방송 시간은 1씩 늘렸다.
+만약 남은 음식 시간이 0이면 다음 음식으로 넘어가고, 이때는 방송 시간은 그대로이다.
+방송시간이 K초가 되면, 반복문을 멈추고 다음 먹어야 하는 음식의 순서를 출력한다.
+```python
+from collections import deque
+def solution(food_times, k):
+    answer = -1
+    idx = 0
+    time = 0
+
+    while time < k:
+        if food_times[idx]:
+            food_times[idx] -= 1
+            time += 1
+            # print(food_times, time, idx)
+        idx = (idx + 1) % len(food_times)
+
+    for i in range(len(food_times)):
+        if food_times[idx]:
+            answer = idx + 1
+            break
+        idx = (idx + 1) % len(food_times)
+    return answer
+```
+
+위 풀이로 정확성 테스트 20번을 제외한 모든 문제를 통과했다.
+
+### ❌두번째 풀이(정확성✅ 효율성❌)
+두번째는 큐를 이용해서 풀이했다.
+enumerate() 함수를 이용해서 q에 [순서, 음식 시간]을 넣어줬다.
+q에서 하나씩 꺼내서 음식 시간을 1씩 줄어주고 남은 시간이 0보다 크다면 다시 q에 넣어주면서 진행했다.
+K번 반복 후, q의 제일 앞에 있는 음식의 순서를 return 해주었다.
+
+이 풀이로 정확성 테스트는 모두 통과했지만, 효율성 테스트를 모두 실패했다....
+```python
+from collections import deque
+def solution(food_times, k):
+    answer = -1
+    q = deque()
+    for i, t in enumerate(food_times):
+        q.append([i+1, t])
+    
+    for _ in range(k):
+        if not q:
+            return answer
+        d = q.popleft()
+        if d[1]:
+            d[1] -= 1
+            if d[1]:
+                q.append(d)
+    if q:
+        d = q.popleft()
+        answer = d[0]
+    
+    return answer   
+```
+
+### 맞은 풀이
+
+다른 사람들의 풀이를 보고 공부한 결과 이 문제는 다음과 같은 로직으로 풀이해야한다.
+>
+1. k 값이 충분하면 즉, 음식을 하나 다 먹을 수 있을 만큼 여러번 회전이 가능하면 그에 드는 시간만큼 k 값을 빼주고 heappop을 통해 음식 하나를 제거해줍니다. + 이 과정이 가능할 때 까지 음식을 제거해줍니다.
+>
+2. 위 과정을 반복하다보면 음식 하나를 다 먹을 수 없을 만큼 k 값이 작아지고 이때부터 heap을 index 기준으로 정렬하여 남은 k 값을 이용해 네트워크 중단 후 먹어야할 음식을 구해줍니다. => 먹어야할 음식의 index = k % len(heap)
+[참고](https://kjhoon0330.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%AC%B4%EC%A7%80%EC%9D%98-%EB%A8%B9%EB%B0%A9-%EB%9D%BC%EC%9D%B4%EB%B8%8C-Python)
+
+```python
+from heapq import heappush, heappop
+
+def solution(food_times, k):
+    # 방송 중단 전 음식을 다 먹는 경우
+    if sum(food_times) <= k:
+        return - 1
+    
+    foodHeap = []
+    length = len(food_times)    #남은 음식 개수
+    for i in range(length):
+        heappush(foodHeap, [food_times[i], i + 1]);
+    
+    time = 0
+    while (foodHeap[0][0] - time) * length < k:
+        k -= (foodHeap[0][0] - time) * length
+        time += (foodHeap[0][0] - time)
+        length -= 1
+        heappop(foodHeap)
+        
+    result = sorted(foodHeap, key = lambda x : x[1])    # index를 기준으로 heap을 다시 정렬
+    answer = result[k % length][1]
+    return answer
+```
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://programmers.co.kr/learn/challenges
