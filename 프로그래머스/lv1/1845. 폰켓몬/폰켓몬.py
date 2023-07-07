@@ -1,9 +1,12 @@
 def solution(nums):
     answer = 0
-    if len(set(nums)) == len(nums)//2:
-        answer = len(nums)//2
-    elif len(set(nums)) > len(nums)//2:
-        answer = len(nums)//2
-    else :
-        answer = len(set(nums))
+    l = len(nums)
+    dic = {}
+    for n in nums:
+        if n not in dic:
+            dic[n] = 1
+        else:
+            dic[n] += 1
+    print(dic)
+    answer = min(l//2, len(dic))
     return answer
