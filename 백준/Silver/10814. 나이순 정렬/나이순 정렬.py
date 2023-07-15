@@ -1,8 +1,13 @@
+import sys
+input = sys.stdin.readline
 n = int(input())
-list = []
+arr = []
 for i in range(n):
-    list.append(input().split())
+  x,y = input().split()
+  arr.append([i,x,y])
 
-list.sort(key = lambda x : int(x[0]))
-for a,n in list:
-    print(a, n)
+
+arr = sorted(arr, key = lambda x : (int(x[1]), x[0]))
+
+for i, x, y in arr:
+  print(x, y)
