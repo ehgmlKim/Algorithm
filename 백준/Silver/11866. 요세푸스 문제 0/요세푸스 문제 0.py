@@ -1,11 +1,18 @@
+import sys
+input = sys.stdin.readline
 n, k = map(int, input().split())
+
 arr = [i for i in range(1, n+1)]
-idx = k-1
-count = 1
-print("<", end='')
-for _ in range(n-1):
-  print(arr.pop(idx), end=", ")
-  idx = idx+k-1
-  if idx>=len(arr):
-    idx = idx%len(arr)
-print(arr[0], ">", sep="")
+answer = []
+idx = 0
+while len(arr)>0:
+  idx = (idx + k -1)%len(arr)
+  x = arr.pop(idx%len(arr))
+  answer.append(x)
+print("<", end="")
+for i in range(len(answer)):
+  if i==len(answer)-1:
+    print(answer[i], end='')
+  else:
+    print(answer[i], end=', ')
+print(">")
