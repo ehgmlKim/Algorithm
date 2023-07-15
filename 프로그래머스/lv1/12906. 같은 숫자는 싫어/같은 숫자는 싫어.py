@@ -4,6 +4,6 @@ def solution(arr):
         if i == 0:
             answer.append(arr[i])
         else:
-            if arr[i-1] != arr[i] :
+            if arr[i] != arr[i-1]:
                 answer.append(arr[i])
     return answer
