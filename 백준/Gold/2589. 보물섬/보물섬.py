@@ -1,36 +1,47 @@
+import sys
 from collections import deque
 
-n,m=map(int, input().split())
-maps=[]
-for i in range(n):
-  maps.append(list(input()))
+input = sys.stdin.readline
 
-dx=[1,-1,0,0]
-dy=[0,0,1,-1]
+N, M = map(int, input().split())
+bomool = []
+land = []
+for i in range(N):
+    temp = list(map(str, input()))
+    for j in range(len(temp)):
+        if temp[j] == 'L':
+            land.append((i, j))
+    bomool.append(temp)
 
-def bfs(i,j):
-  queue=deque()
-  queue.append((i,j))
-  visited=[[0]*m for _ in range(n)]
-  visited[i][j]=1
-  cnt=0
-  while queue:
-    x,y=queue.popleft()
-    for i in range(4):
-      nx=x+dx[i]
-      ny=y+dy[i]
-      if nx<0 or nx>=n or ny<0 or ny>=m:
-        continue
-      elif maps[nx][ny]=='L' and visited[nx][ny]==0:
-        visited[nx][ny]=visited[x][y]+1
-        cnt=max(cnt,visited[nx][ny])
-        queue.append((nx,ny))
-  return cnt-1
+dr = [-1, 0, 1, 0]  # 행 상 우 하 좌
+dc = [0, 1, 0, -1]  # 열 상 우 하 좌
 
-result=0
-for i in range(n):
-  for j in range(m):
-    if maps[i][j]=='L':
-      result=max(result,bfs(i,j))
 
-print(result)
+def bfs(r, c):
+    queue = deque([[r, c, 0]])
+    visited[r][c] = True
+    while queue:
+        r, c, distance = queue.popleft()
+
+        for i in range(4):
+
+            nr = r + dr[i]
+            nc = c + dc[i]
+
+            if nr < 0 or nr >= N or nc < 0 or nc >= M or visited[nr][nc] or bomool[nr][nc] == 'W':
+                continue
+
+            visited[nr][nc] = True
+            queue.append([nr, nc, distance + 1])
+
+    return distance
+
+
+max_ = 0
+for i in range(len(land)):
+    visited = [[False] * M for _ in range(N)]
+    distance = bfs(land[i][0], land[i][1])
+    if max_ < distance:
+        max_ = distance
+
+print(max_)
