@@ -3,22 +3,13 @@ input = sys.stdin.readline
 
 n = int(input())
 A = list(map(int, input().split()))
-A.sort()
+dict = {x:0 for x in A}
+
 m = int(input())
-arr = list(map(int, input().split()))
+B = list(map(int, input().split()))
 
-def find(start, end, target):
-  if start>end:
-    return 0
-
-  mid = (start + end)//2
-
-  if A[mid] > target:
-    return find(start, mid-1, target)
-  elif A[mid] < target:
-    return find(mid+1, end, target)
+for a in B:
+  if a in dict:
+    print(1)
   else:
-    return 1
-
-for a in arr:
-  print(find(0,n-1,a))
+    print(0)
