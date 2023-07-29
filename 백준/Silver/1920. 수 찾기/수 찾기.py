@@ -1,14 +1,24 @@
 import sys
-n = int(sys.stdin.readline())
-A = sorted(list(map(int, sys.stdin.readline().split())))
+input = sys.stdin.readline
 
-m = int(sys.stdin.readline())
-B = list(map(int, sys.stdin.readline().split()))
-for b in B:
-  if b > A[n-1] or b < A[0]:
-    print(0)
+n = int(input())
+A = list(map(int, input().split()))
+A.sort()
+m = int(input())
+arr = list(map(int, input().split()))
+
+def find(start, end, target):
+  if start>end:
+    return 0
+
+  mid = (start + end)//2
+
+  if A[mid] > target:
+    return find(start, mid-1, target)
+  elif A[mid] < target:
+    return find(mid+1, end, target)
   else:
-    if b in A:
-      print(1)
-    else:
-      print(0)
+    return 1
+
+for a in arr:
+  print(find(0,n-1,a))
