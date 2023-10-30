@@ -1,17 +1,20 @@
 import sys
 input = sys.stdin.readline
 
-def func(x):
-  if x==1:
-    return 1
-  elif x==2:
-    return 2
-  elif x==3:
-    return 4
-  else:
-    return func(x-1)+func(x-2)+func(x-3)
+n = int(input())
 
-t = int(input())
-for _ in range(t):
-  n = int(input())
-  print(func(n))
+# 1 => 1
+# 2 => 2
+# 3 => 4
+# 4 => 7
+dp = [0 for _ in range(11)]
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
+for _ in range(n):
+  m = int(input())
+  
+  for x in range(4, m+1):
+    dp[x] = dp[x-1] + dp[x-2] + dp[x-3]
+  print(dp[m])
+  
